@@ -2,13 +2,16 @@
 
 const express = require('express');
 
+var bodyParser = require('body-parser')
+var jsonParser = bodyParser.json()
+
 // Constants
 const PORT = 8080;
 const HOST = '0.0.0.0';
 
 // App
 const app = express();
-app.post('/', (req, res) => {
+app.post('/',jsonParser, (req, res) => {
   console.log(req.body)
   res.send('Hello World');
 });
