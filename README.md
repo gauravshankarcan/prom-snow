@@ -3,23 +3,39 @@
 ## Overview
 The article describes a mechanism to proxy non-prometheus /alert manager supported integrations to ITSM tools via the Webhook interface.
 
-In this article today, we are going to go over 
+In this article today, we are going to integrate openshift based prometheus to Service now .
 
-## The Build
+## Source Code and example
 
  The repo is [provide here for reference](https://github.com/gauravshankarcan/prom-snow) 
 
- Lets create a docker file / container to act as a proxy . I choose Javascript, however the logic can be applied to any web framework / scripting language 
+## Build the proxy
+
+Lets built an app using the docker image 
 
 ```
-FROM node:16
-WORKDIR /usr/src/app
-COPY app/package*.json ./
-RUN npm install
-COPY app/. .
-EXPOSE 8080
-CMD [ "node", "server.js" ]
+oc new-app https://github.com/gauravshankarcan/prom-snow
 ```
+Now that the app is running , it time to direct alerts to the proxy
 
-This is a generic docker file for any nodejs code which coppies the app folder inside the container and runs server.js
+Let create an alert with label matchers  ```alert=servicenow```
+
+```
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  creationTimestamp: null
+  labels:
+    prometheus: example
+    role: alert-rules
+  name: prometheus-example-rules
+spec:
+  groups:
+  - name: ./example.rules
+    rules:
+    - alert: ExampleAlert
+      expr: vector(1)
+      labels:
+        alert: servicenow
+```
 
