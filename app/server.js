@@ -14,7 +14,7 @@ const app = express();
 app.post('/',jsonParser, (req, res) => {
   console.log(req.url)
   console.log(JSON.stringify(req.method))
-  console.logJSON.stringify((req.body))
+  console.log(JSON.stringify(req.body))
   res.send('Hello World');
 });
 
