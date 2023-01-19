@@ -54,9 +54,34 @@ create a receiver of type web hook
 > Depending on how you have set up the service you may want to add
 >
 > ```
-> http://
+> http://<svc>:port  in the url below
 > ```
 
 ![](images/receiver.PNG)
 
 The moment alert fires next you will notice the output format in the logs of the proxy created earlier
+
+The logs of the proxy pod will show something similar to below
+
+```
+{
+receiver: 'servicenow',
+status: 'firing',
+alerts: [
+{
+status: 'firing',
+labels: [Object],
+annotations: {},
+startsAt: '2023-01-19T21:03:53.112Z',
+endsAt: '0001-01-01T00:00:00Z',
+generatorURL: 'https://thanos-querier-openshift-monitoring.apps-crc.testing/api/graph?g0.expr=vector%281%29&g0.tab=1',
+fingerprint: '3b86a
+.
+.
+.
+.
+.
+}
+```
+
+We are now going to use this request and translate this to a Servicenow compatible API ( similar process can be used for other ITSM tools )

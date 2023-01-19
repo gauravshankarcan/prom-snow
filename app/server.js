@@ -13,7 +13,7 @@ const HOST = '0.0.0.0';
 const app = express();
 app.post('/',jsonParser, (req, res) => {
   console.log(req.url)
-  console.log(req.method)
+  console.log(JSON.stringify(req.method))
   console.log(req.body)
   res.send('Hello World');
 });
