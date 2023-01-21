@@ -109,7 +109,9 @@ const closeRecord = async (login,sys_id,alert) => {
     rejectUnauthorized: false,
     data: {
       "work_notes": alert,
-      "state": 6
+      "state": 6,
+      "close_notes": "Closed with error resolved from prom",
+      "close_code": "Resolved by request"
     },
     headers: {
       'Content-Type': 'application/json',
