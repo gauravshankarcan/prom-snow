@@ -108,10 +108,8 @@ const closeRecord = async (login,sys_id,alert) => {
     method: "PUT",
     rejectUnauthorized: false,
     data: {
-      "comments_and_work_notes": alert,
-      "state": 6,
-      "close_code": "closed",
-      "close_notes": alert
+      "work_notes": alert,
+      "state": 6
     },
     headers: {
       'Content-Type': 'application/json',
