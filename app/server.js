@@ -127,18 +127,23 @@ const closeRecord = async (login,sys_id,alert) => {
 const requestParse = async (body) => {
   const login = await itsmLogin();
   body.alerts.forEach(async (alert) => {
-        const result = await searchQuery(login,constructUniqueString(alert))
-        if(result.length == 0 && alert.status === "firing") {  // no record exists create new record
-          await createRecord(login,constructUniqueString(alert),alert)
-        } else if(result.length == 1 && alert.status === "firing") { // update record with last info
-          await updateRecord(login,result[0].sys_id,alert)
-        } else if(result.length == 1 && alert.status === "resolved") { // resolve record
-          await closeRecord(login,result[0].sys_id,alert)
-        } else { // somthing is wrong
-          console.log("more than 1 record found for search criteria")
-          console.log(alert)
-          console.log("Search string: "+constructUniqueString(alert))
-        }
+        try {    
+                  const result = await searchQuery(login,constructUniqueString(alert))
+                  if(result.length == 0 && alert.status === "firing") {  // no record exists create new record
+                    await createRecord(login,constructUniqueString(alert),alert)
+                  } else if(result.length == 1 && alert.status === "firing") { // update record with last info
+                    await updateRecord(login,result[0].sys_id,alert)
+                  } else if(result.length == 1 && alert.status === "resolved") { // resolve record
+                    await closeRecord(login,result[0].sys_id,alert)
+                  } else { // somthing is wrong
+                    console.log("more than 1 record found for search criteria")
+                    console.log(alert)
+                    console.log("Search string: "+constructUniqueString(alert))
+                  }
+         }
+         catch (e) {
+          console.log(e)
+         }
     });
 };
 
