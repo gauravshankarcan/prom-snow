@@ -47,7 +47,7 @@ spec:
         alert: servicenow
 ```
 
-create a receiver of type web hook  
+create a receiver of type web hook
 
 > your url may be different based on your service
 >
@@ -64,24 +64,64 @@ The moment alert fires next you will notice the output format in the logs of the
 The logs of the proxy pod will show something similar to below
 
 ```
+Running on http://0.0.0.0:8080
+/
+"POST"
 {
-receiver: 'servicenow',
-status: 'firing',
-alerts: [
+  "receiver": "servicenow",
+  "status": "firing",
+  "alerts": [
 {
-status: 'firing',
-labels: [Object],
-annotations: {},
-startsAt: '2023-01-19T21:03:53.112Z',
-endsAt: '0001-01-01T00:00:00Z',
-generatorURL: 'https://thanos-querier-openshift-monitoring.apps-crc.testing/api/graph?g0.expr=vector%281%29&g0.tab=1',
-fingerprint: '3b86a
-.
-.
-.
-.
-.
+      "status": "firing",
+      "labels": {
+        "alert": "servicenow",
+        "alertname": "ExampleAlert",
+        "namespace": "prom-snow"
+      },
+      "annotations": {},
+      "startsAt": "2023-01-19T21:22:07.846Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "https://thanos-querier-openshift-monitoring.apps-crc.testing/api/graph?g0.expr=vector%281%29&g0.tab=1",
+      "fingerprint": "d0212c4c33b62441"
+    }
+  ],
+  "groupLabels": {
+    "namespace": "prom-snow"
+  },
+  "commonLabels": {
+    "alert": "servicenow",
+    "namespace": "prom-snow"
+  },
+  "commonAnnotations": {},
+  "externalURL": "https:///console-openshift-console.apps-crc.testing/monitoring",
+  "version": "4",
+  "groupKey": "{}/{alert=\"servicenow\"}:{namespace=\"prom-snow\"}",
+  "truncatedAlerts": 0
 }
+
 ```
 
 We are now going to use this request and translate this to a Servicenow compatible API ( similar process can be used for other ITSM tools )
+
+The body of the request contains the necessary data to construct the API call to servicenow
+
+## Constructing the Proxy to your ITSM tool
+
+We will use a developer instance of SNOW for showing the construction, but the logic is essentially the same for any ITSM tool
+
+The first section in my node.js code is to receive the request using the express nodejs framework . Express is pretty popular rest javascript based frame work 
+
+```
+## Using the path "/" we capture requests and send to req object  thus the data from prometheus arrives on req.body
+
+const app = express();
+app.post('/',jsonParser, (req, res) => {
+   .
+   .
+   .
+  res.send('Success');
+});
+```
+
+
+Now that we have the data o req.body we will pass it to function ro be parsed and modified to the required format
