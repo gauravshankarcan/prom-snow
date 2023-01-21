@@ -128,6 +128,7 @@ const requestParse = async (body) => {
   const login = await itsmLogin();
   body.alerts.forEach(async (alert) => {
         try {    
+                  console.log(alert)
                   const result = await searchQuery(login,constructUniqueString(alert))
                   if(result.length == 0 && alert.status === "firing") {  // no record exists create new record
                     await createRecord(login,constructUniqueString(alert),alert)
