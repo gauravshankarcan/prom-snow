@@ -22,11 +22,11 @@ const  itsmLogin = async () => {
     method: "POST",
     rejectUnauthorized: false,
     data: querystring.stringify({
-      grant_type: 'password',
-      client_id: 'd4eb1e15722021109d9fca02f0d61751',
-      client_secret: 'VKdb!!8@SG',
-      username: 'admin',
-      password: 'DZh4rm*6hOB$'
+      grant_type: 'password',   
+      client_id: '<sample>', // Process.env.client_id  to obtain from environment variables
+      client_secret: '<sample>', // Process.env.client_secret  to obtain from environment variables
+      username: '<sample>', // Process.env.username  to obtain from environment variables
+      password: '<sample>'  // Process.env.password  to obtain from environment variables
       }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
