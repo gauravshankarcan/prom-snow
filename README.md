@@ -55,7 +55,7 @@ This is the main control function that decides the kind of operations which need
 
 The webhook body is received from prometheus and contains multiple alerts that are grouped together, hence it is necessary to write a for loop on the alert section . However, before we iterate on the foreach loop we perform a login.
 
-here is a sample request received
+Here is a sample request received
 
 ```json
 {
