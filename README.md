@@ -1,10 +1,10 @@
-# Connecting your Prometheus based alerts to an API based ITSM tool
+# Connecting your Prometheus alerts to an API based ITSM tool
 
 ## Overview
 
 The article describes a mechanism to proxy a simple webhook to various ITSM tools.
 
-In this article today, we are going to integrate openshift based prometheus to Service now. [ The process is similar to any API enabled ITSM tool]
+In this article today, we are going to integrate openshift based prometheus to Service now. [ The process is similar to any API-enabled ITSM tool]
 
 ### Prerequisite
 
@@ -15,7 +15,7 @@ In this article today, we are going to integrate openshift based prometheus to S
 
 ## Source Code Example
 
-The git repo with the sample template to be configured is [provide here for reference](https://github.com/gauravshankarcan/prom-snow)
+The git repo with the sample template to be configured is [provided here for reference](https://github.com/gauravshankarcan/prom-snow)
 
 
 ## Constructing the Proxy to your ITSM tool
@@ -93,7 +93,7 @@ const requestParse = async (body) => {
 This function is fired once per webhook received from prometheus and is responsible for login into your ITSM.  Depending on the ITSM tool / Auth method you choose the rest request may change.
 The end goal of this request is to return a Bearer token for further calls 
 
-> Note:  all the variables can be replace by environment data using process.env  hence collecting data from container/pod environment . This can be injected via standard mechanisms like secrest /config maps etc 
+> Note:  all the variables can be replaced by environment data using `process.env.VARIABLE_NAME`  hence collecting data from container/pod environment . This can be injected via standard mechanisms like secret/config maps etc 
 
 ```javascript
 const  itsmLogin = async () => {
@@ -132,7 +132,7 @@ const constructUniqueString = (alert) => {
 #### The search criteria
 
 This function searches the ITSM tool 
-> Note: The request object can be constructed in many ways to suit your needs , in the case below my unique Identifier is short_description field. The Rest call can be constructed to search for any field which contains the unique string, however ensure the return only retuns a max of 1 records.
+> Note: The request object can be constructed in many ways to suit your needs , in the case below my unique Identifier is `short_description` field. The Rest call can be constructed to search for any field which contains the unique string, however, ensure the the query only returns a max of 1 records.
 
 The header is populated with the login token obtained from Login Function
 
@@ -162,12 +162,12 @@ When creating a new record ensure the unique fingerprint is set on any field, su
 
 Ensure the Update record does not modify the unique field, however, all other fields in the ITSM record are capable of being modified
 
-The resolve function will usually be triggered by the last call made by prometheus with that fingerprint. Prometheus sets `alert.status` to resolved . this is a clear indication that the request or incident can be resolved.
+The resolve function will usually be triggered by the last call made by prometheus with that fingerprint. Prometheus sets `alert.status` to resolved. this is a clear indication that the request or incident can be resolved.
 
 ## Build the proxy and generating the test alert
 
 Let's build a proxy app using the docker image
-Sample Docker file is the app folder. you can build the image and deploy after configuring it based on the above steps . Ensure all the credentials are passed as environment variables as secrets.
+Sample Dockerfile is the app folder. you can build the image and deploy after configuring it based on the above steps. Ensure all the credentials are passed as environment variables as secrets.
 
 Let create an alert with label matchers  ``alert=servicenow``
 
@@ -205,7 +205,7 @@ The moment alert fires next you will notice the output in the logs of the proxy 
 
 This is the indication that the proxy image has received the webhook and will start the sending process to service now. Once the request has been completed, you should see the request in service now
 
-Similarly, once the alert has been resolved, the servicenow record would also resolve . ( make take a few minutes for prom to detect the alert resolution and send the webhook.)
+Similarly, once the alert has been resolved, the servicenow record would also resolve. ( make take a few minutes for prom to detect the alert resolution and send the webhook.)
 
 ![](images/snow.png)
 
