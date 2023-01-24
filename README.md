@@ -197,7 +197,7 @@ The header is populated with the login token obtained from Login Function
   return searchResult.data.result
 ```
 
-### The Create / Update and closed methods
+#### The Create / Update and closed methods
 
 These 3 functions represented by `createRecord`, `updateRecord` and `closeRecord` in the server.js file execute based on the control function `requestParse` . 
 
@@ -209,7 +209,7 @@ The resolve function will usually be triggered by the last call made by promethe
 
 Prometheus sets `alert.status` to resolved. this is a clear indication that the request or incident can be resolved.
 
-## Build the proxy and generating the test alert
+### Build the proxy and generating the test alert
 
 Let's build a proxy app using the docker image
 Sample Dockerfile is the app folder. you can build the image and deploy after configuring it based on the above steps. Ensure all the credentials are passed as environment variables as secrets.
