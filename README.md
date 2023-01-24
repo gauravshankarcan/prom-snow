@@ -175,7 +175,7 @@ const constructUniqueString = (alert) => {
 
 This function searches the ITSM tool 
 
-The request object can be constructed in many ways to suit your needs , in the case below my unique Identifier is `short_description` field. The Rest call can be constructed to search for any field which contains the unique string, however, ensure the the query only returns a max of 1 records.
+The request object can be constructed in many ways to suit your needs, in the case below my unique Identifier is `short_description` field. The REST call can be constructed to search for any field which contains the unique string, however, ensure the query only returns a max of 1 records.
 
 The header is populated with the login token obtained from Login Function
 
@@ -203,9 +203,11 @@ These 3 functions represented by `createRecord`, `updateRecord` and `closeRecord
 
 When creating a new record ensure the unique fingerprint is set on any field, such that the search function `searchQuery`` can retrieve the record using the unique fingerprint field.
 
-Ensure the Update record does not modify the unique field, however, all other fields in the ITSM record are capable of being modified
+Ensure the Update record does not modify the unique field, however, all other fields in the ITSM record are capable of being modified. 
 
-The resolve function will usually be triggered by the last call made by prometheus with that fingerprint. Prometheus sets `alert.status` to resolved. this is a clear indication that the request or incident can be resolved.
+The resolve function will usually be triggered by the last call made by prometheus with that fingerprint. 
+
+Prometheus sets `alert.status` to resolved. this is a clear indication that the request or incident can be resolved.
 
 ## Build the proxy and generating the test alert
 
@@ -255,3 +257,5 @@ Similarly, once the alert has been resolved, the servicenow record would also re
 ## Summary
 
 That was lot of info, but once you have built it, It will have long-term benefits of being able to integrate alerting in your existing servicenow incident process flow.
+
+Any labels set on the prometheus alerts are passed onto the webhook body, similar to `alert=servicenow`, you can set additional labels like description / short_description / owner etc, and pass it to the webhook and set it using the create function on to the ITSM record. 
