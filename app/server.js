@@ -110,8 +110,8 @@ const closeRecord = async (login,sys_id,alert) => {
     data: {
       "work_notes": alert,
       "state": 6,
-      "close_notes": "Closed with error resolved from prom",
-      "close_code": "Resolved by request"
+      "close_notes": "Closed with error resolved from prom", // can be set via prom labels like alert.labels.close_notes 
+      "close_code": "Resolved by request" // can be set via prom labels like alert.labels.close_code 
     },
     headers: {
       'Content-Type': 'application/json',
