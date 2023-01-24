@@ -205,9 +205,9 @@ When creating a new record ensure the unique fingerprint is set on any field, su
 
 Ensure the Update record does not modify the unique field, however, all other fields in the ITSM record are capable of being modified. 
 
-The resolve function will usually be triggered by the last call made by prometheus with that fingerprint. 
+The resolve function will usually be triggered by the last call made by prometheus with that fingerprint. Prometheus sets `alert.status` to resolved. this is a clear indication that the request or incident can be resolved.
 
-Prometheus sets `alert.status` to resolved. this is a clear indication that the request or incident can be resolved.
+Add more fields as you see fit to all three functions, labels are avaiable via alert.label.<LABEL_NAME> environment variables are available as process.env.<ENV_VARIABLE>
 
 ### Build the proxy and generating the test alert
 
