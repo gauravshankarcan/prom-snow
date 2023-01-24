@@ -1,4 +1,4 @@
-# Connecting your Prometheus alerts to an API based ITSM tool
+# Connecting your Prometheus alerts to an API-based ITSM tool / Servicenow
 
 ## Overview
 
