@@ -233,6 +233,9 @@ spec:
       expr: vector(1)
       labels:
         alert: servicenow  ### this is a unique identifier to send requests on the webhook , this should match the next steps
+        description: This is an example alert
+        closenotes: if required to be added for audit purposed during closure
+        ### any label you add here can be used inside javascript . 
 ```
 
 create a receiver of type webhook
