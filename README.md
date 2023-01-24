@@ -91,14 +91,14 @@ Here is a sample request received
 }
 ```
 
-After the login function `itsmLogin`, for each alert, we need to create a unique fingerprint which is a unique identifier used to query the ITSM server to decide, if a request has to be updated or created, or marked as closed.
+After the login function `itsmLogin`, for each alert, we need to create a unique fingerprint which is a unique identifier used to query the ITSM server to decide, if a request has to be created, updated, or marked as closed.
 
-The unique string which determines the kind of operation that is needed to be performed is done by `constructUniqueString` function()
+The unique string which determines the kind of operation that is needed to be performed is done by `constructUniqueString` function.
 
 The `searchQuery` function returns a search result from ITSM tool to see if a record exists and helps decide the type of operation which needs to be performed. The `if else conditions` are a mechanism to decide the operation using the search results.
 
 ```javascript
-
+// The Request parse function
 const requestParse = async (body) => {
   const login = await itsmLogin();
   body.alerts.forEach(async (alert) => {
@@ -126,12 +126,15 @@ const requestParse = async (body) => {
 
 #### Itsm Login function
 
-This function is fired once per webhook received from prometheus and is responsible for login into your ITSM.  Depending on the ITSM tool / Auth method you choose the rest request may change.
+This function is fired once per webhook received from prometheus and is responsible for login into your ITSM.  Depending on the ITSM tool / Auth method you choose, the rest request may change.
 The end goal of this request is to return a Bearer token for further calls 
 
 > Note:  all the variables can be replaced by environment data using `process.env.VARIABLE_NAME`  hence collecting data from container/pod environment . This can be injected via standard mechanisms like secret/config maps etc 
 
 ```javascript
+
+//Authentication into your ITSM tool
+
 const  itsmLogin = async () => {
   const itsmLoginRequestConstruct ={
     baseURL: "https://dev105291.service-now.com/oauth_token.do",
@@ -160,6 +163,9 @@ This function has an input variable of the alert json and returns a unique strin
 > Note: Ensure this string is unique enough such that ITSM will never return more than 1 record
 
 ```javascript
+
+// the below function returns a unique string per alert raised/resolved.
+
 const constructUniqueString = (alert) => {
   return  alert.labels.alertname +"-"+ alert.labels.namespace+"-"+alert.fingerprint
 }
@@ -168,7 +174,8 @@ const constructUniqueString = (alert) => {
 #### The search criteria
 
 This function searches the ITSM tool 
-> Note: The request object can be constructed in many ways to suit your needs , in the case below my unique Identifier is `short_description` field. The Rest call can be constructed to search for any field which contains the unique string, however, ensure the the query only returns a max of 1 records.
+
+The request object can be constructed in many ways to suit your needs , in the case below my unique Identifier is `short_description` field. The Rest call can be constructed to search for any field which contains the unique string, however, ensure the the query only returns a max of 1 records.
 
 The header is populated with the login token obtained from Login Function
 
