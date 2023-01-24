@@ -67,8 +67,9 @@ const createRecord = async (login,uniqueString,alert) => {
     rejectUnauthorized: false,
     data: {
       "short_description": uniqueString,
-      "description": alert,
-      "work_notes": alert
+      "description": alert,// can be set via prom labels like alert.labels.description 
+      "work_notes": alert// can be set via prom labels like alert.labels.work_notes 
+      //add more fields as you see fit , labels are avaiable via alert.label.<LABEL_NAME> environment variables are available as process.env.<ENV_VARIABLE>
     },
     headers: {
       'Content-Type': 'application/json',
@@ -88,6 +89,7 @@ const updateRecord = async (login,sys_id,alert) => {
     rejectUnauthorized: false,
     data: {
       "work_notes": alert
+      //add more fields as you see fit , labels are avaiable via alert.label.<LABEL_NAME> environment variables are available as process.env.<ENV_VARIABLE>
     },
     headers: {
       'Content-Type': 'application/json',
@@ -112,6 +114,7 @@ const closeRecord = async (login,sys_id,alert) => {
       "state": 6,
       "close_notes": "Closed with error resolved from prom", // can be set via prom labels like alert.labels.close_notes 
       "close_code": "Resolved by request" // can be set via prom labels like alert.labels.close_code 
+      //add more fields as you see fit , labels are avaiable via alert.label.<LABEL_NAME> environment variables are available as process.env.<ENV_VARIABLE>
     },
     headers: {
       'Content-Type': 'application/json',
