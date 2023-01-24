@@ -258,4 +258,4 @@ Similarly, once the alert has been resolved, the servicenow record would also re
 
 That was lot of info, but once you have built it, It will have long-term benefits of being able to integrate alerting in your existing servicenow incident process flow.
 
-Any labels set on the prometheus alerts are passed onto the webhook body, similar to `alert=servicenow`, you can set additional labels like description / short_description / owner /close notes to be added when resolved is closed by prom etc, and pass it to the webhook and set it using the create function on to the ITSM record. 
+Any labels set on the prometheus alerts are passed onto the webhook body, similar to `alert=servicenow`, you can set additional labels like description / short_description / owner /close notes to be added when resolved etc, and pass it to the webhook and set it using the create function on to the ITSM record. 
