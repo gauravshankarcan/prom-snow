@@ -26,11 +26,13 @@ The git repo contains an app folder that has a simple 1-page nodejs code which w
 
 ### Let's prepare the server.js file
 
-Open up the file app/server.js  this file contains an express-based app that receives data as we webhook from prometheus .  
+Open up the file app/server.js  this file contains an express-based app that receives data as a webhook from prometheus.  
 
-> note: At a later point of this document we will show how to configure prometheus webhooks on openshift 
+> Note: At a later point of this article we will show how to configure prometheus webhooks on openshift 
 
 The request we receive from Prometheus is a post request hence we use the simple function, which captures the body of the post and sends it to be parsed by the requestParse function
+
+To view a sample request body format sent by prometheus, refer to the [webhook configurations](https://prometheus.io/docs/alerting/latest/configuration/#webhook_config) 
 
 ```javascript
 app.post('/',jsonParser, async (req, res) => {
@@ -51,9 +53,43 @@ we will be going through each of the above to configure and customize to your ne
 
 This is the main control function that decides the kind of operations which needs to be performed.
 
-To view a sample request body format, refer to the [webhook configurations](https://prometheus.io/docs/alerting/latest/configuration/#webhook_config) 
-
 The webhook body is received from prometheus and contains multiple alerts that are grouped together, hence it is necessary to write a for loop on the alert section 
+
+here is a sample request received
+
+```json
+{
+  "receiver": "servicenow",
+  "status": "firing",
+  "alerts": [
+{
+      "status": "firing",
+      "labels": {
+        "alert": "servicenow",
+        "alertname": "ExampleAlert",
+        "namespace": "prom-snow"
+      },
+      "annotations": {},
+      "startsAt": "2023-01-19T21:22:07.846Z",
+      "endsAt": "0001-01-01T00:00:00Z",
+      "generatorURL": "https://thanos-querier-openshift-monitoring.apps-crc.testing/api/graph?g0.expr=vector%281%29&g0.tab=1",
+      "fingerprint": "d0212c4c33b62441"
+    }
+  ],
+  "groupLabels": {
+    "namespace": "prom-snow"
+  },
+  "commonLabels": {
+    "alert": "servicenow",
+    "namespace": "prom-snow"
+  },
+  "commonAnnotations": {},
+  "externalURL": "https:///console-openshift-console.apps-crc.testing/monitoring",
+  "version": "4",
+  "groupKey": "{}/{alert=\"servicenow\"}:{namespace=\"prom-snow\"}",
+  "truncatedAlerts": 0
+}
+```
 
 After the login function `itsmLogin`, for each alert, we need to create a unique fingerprint which is a unique identifier used to query the ITSM server to decide, if a request has to be updated or created, or marked as closed.
 
