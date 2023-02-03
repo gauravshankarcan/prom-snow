@@ -57,7 +57,7 @@ const searchQuery = async (login,uniqueString) => {
   }
   const searchResult = await axios.request(itsmSearchConstruct)
   console.log("Search result")
-  console.log(JSON.stringify(searchResult))
+  console.log(JSON.stringify(searchResult.data))
   return searchResult.data.result
 }
 
