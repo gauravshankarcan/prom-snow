@@ -23,10 +23,10 @@ const  itsmLogin = async () => {
     rejectUnauthorized: false,
     data: querystring.stringify({
       grant_type: 'password',   
-      client_id: '<sample>', // Process.env.client_id  to obtain from environment variables
-      client_secret: '<sample>', // Process.env.client_secret  to obtain from environment variables
-      username: '<sample>', // Process.env.username  to obtain from environment variables
-      password: '<sample>'  // Process.env.password  to obtain from environment variables
+      client_id: '063d6d9d15f021100f36ebbb2bb566d9', // Process.env.client_id  to obtain from environment variables
+      client_secret: '82*.(@TV:+', // Process.env.client_secret  to obtain from environment variables
+      username: 'admin', // Process.env.username  to obtain from environment variables
+      password: 'Zwa2GWc$7^eC'  // Process.env.password  to obtain from environment variables
       }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
