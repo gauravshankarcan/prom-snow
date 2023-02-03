@@ -56,6 +56,8 @@ const searchQuery = async (login,uniqueString) => {
     }      
   }
   const searchResult = await axios.request(itsmSearchConstruct)
+  console.log("Search result")
+  console.log(JSON.stringify(searchResult))
   return searchResult.data.result
 }
 
@@ -133,8 +135,12 @@ const requestParse = async (body) => {
   const login = await itsmLogin();
   body.alerts.forEach(async (alert) => {
         try {    
+          
+                  console.log("Alert result")
                   console.log(JSON.stringify(alert))
                   const result = await searchQuery(login,constructUniqueString(alert))
+                  
+                  console.log("Search array")
                   console.log(JSON.stringify(result))
                   if(result.length == 0 && alert.status === "firing") {  // no record exists create new record
                     await createRecord(login,constructUniqueString(alert),alert)
