@@ -22,15 +22,15 @@ The git repo with the sample template to be configured is [provided here for ref
 
 I will use a developer instance of SNOW/service now for showing the construction, but the logic is essentially the same for any ITSM tool
 
-The git repo contains an app folder that has a simple 1-page nodejs code which will be used to construct a docker image to be customized for your needs.
+The git repo contains an app folder that has a simple 1-page nodejs code which will be used to construct a docker image, to be customized for your needs.
 
 ### Let's prepare the server.js file
 
 Open up the file app/server.js  this file contains an express-based app that receives data as a webhook from prometheus.  
 
-> Note: At a later point of this article I will show how to configure prometheus webhooks on openshift 
+> Note: At a later point of this article I will show, how to configure prometheus webhooks on openshift 
 
-The request I receive from Prometheus is a post request hence I will use the simple function, which captures the body of the post and sends it to be parsed by the requestParse function
+The request I receive from Prometheus is a post request, hence I will use the simple function, which captures the body of the post and sends it to be parsed by the requestParse function
 
 To view a sample request body format sent by, refer to the [webhook configurations](https://prometheus.io/docs/alerting/latest/configuration/#webhook_config) 
 
@@ -259,6 +259,6 @@ Similarly, once the alert has been resolved, the servicenow record would also re
 
 ## Summary
 
-That was lot of info, but once you have built it, It will have long-term benefits of being able to integrate alerting in your existing servicenow incident process flow.
+That was lot of info, but once you have built it, It will have long-term benefits by being able to integrate alerting in your existing ITSM process flow.
 
 Any labels set on the prometheus alerts are passed onto the webhook body, similar to `alert=servicenow`, you can set additional labels like description / short_description / owner /close notes to be added when resolved etc, and pass it to the webhook and set it using the create/update/resolve functions on to the ITSM record. 
