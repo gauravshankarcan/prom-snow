@@ -47,13 +47,13 @@ The file contains 5 essential functions
 - searchQuery
 - createRecord/UpdateRecord/DeleteRecord
 
-we will be going through each of the above to configure and customize to your needs
+I will be going through each of the above to configure and customize to your needs
 
 #### Request Parser
 
 This is the main control function that decides the kind of operations which needs to be performed.
 
-The webhook body is received from prometheus and contains multiple alerts that are grouped together, hence it is necessary to write a for loop on the alert section . However, before we iterate on the foreach loop we perform a login.
+The webhook body is received from prometheus and contains multiple alerts that are grouped together, hence it is necessary to write a for loop on the alert section . However, before I iterate on the foreach loop lets perform a login.
 
 Here is a sample request received
 
@@ -91,7 +91,7 @@ Here is a sample request received
 }
 ```
 
-After the login function `itsmLogin`, for each alert, we need to create a unique fingerprint which is a unique identifier used to query the ITSM server to decide, if a request has to be created, updated, or marked as closed.
+After the login function `itsmLogin`, for each alert, I need to create a unique fingerprint which is a unique identifier used to query the ITSM server to decide, if a request has to be created, updated, or marked as closed.
 
 The unique string which determines the kind of operation that is needed to be performed is done by `constructUniqueString` function.
 
