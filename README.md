@@ -4,7 +4,7 @@
 
 The article describes a mechanism to proxy a simple webhook to various ITSM tools.
 
-In this article today, we are going to integrate openshift based prometheus to Service now. [ The process is similar to any API-enabled ITSM tool]
+In this article today, I am going to integrate openshift based prometheus to Service now. [ The process is similar to any API-enabled ITSM tool]
 
 ### Prerequisite
 
@@ -20,17 +20,17 @@ The git repo with the sample template to be configured is [provided here for ref
 
 ## Constructing the Proxy to your ITSM tool
 
-We will use a developer instance of SNOW/service now for showing the construction, but the logic is essentially the same for any ITSM tool
+I will use a developer instance of SNOW/service now for showing the construction, but the logic is essentially the same for any ITSM tool
 
-The git repo contains an app folder that has a simple 1-page nodejs code which we will be using to construct a docker image to be customized for your needs.
+The git repo contains an app folder that has a simple 1-page nodejs code which will be used to construct a docker image to be customized for your needs.
 
 ### Let's prepare the server.js file
 
 Open up the file app/server.js  this file contains an express-based app that receives data as a webhook from prometheus.  
 
-> Note: At a later point of this article we will show how to configure prometheus webhooks on openshift 
+> Note: At a later point of this article I will show how to configure prometheus webhooks on openshift 
 
-The request we receive from Prometheus is a post request hence we use the simple function, which captures the body of the post and sends it to be parsed by the requestParse function
+The request I receive from Prometheus is a post request hence I will use the simple function, which captures the body of the post and sends it to be parsed by the requestParse function
 
 To view a sample request body format sent by, refer to the [webhook configurations](https://prometheus.io/docs/alerting/latest/configuration/#webhook_config) 
 
@@ -137,7 +137,7 @@ The end goal of this request is to return a Bearer token for further calls
 
 const  itsmLogin = async () => {
   const itsmLoginRequestConstruct ={
-    baseURL: "https://dev105291.service-now.com/oauth_token.do",
+    baseURL: "https://<your service now>.service-now.com/oauth_token.do",
     method: "POST",
     rejectUnauthorized: false,
     data: querystring.stringify({
@@ -181,7 +181,7 @@ The header is populated with the login token obtained from Login Function
 
 ```javascript
   const itsmSearchConstruct ={
-    baseURL: "https://dev105291.service-now.com/api/now/table/incident",
+    baseURL: "https://<your service now>.service-now.com/api/now/table/incident",
     method: "GET",
     rejectUnauthorized: false,
     params: {

@@ -18,15 +18,15 @@ const app = express();
 
 const  itsmLogin = async () => {
   const itsmLoginRequestConstruct ={
-    baseURL: "https://dev144072.service-now.com/oauth_token.do",
+    baseURL: "https://<your service now>.service-now.com/oauth_token.do",
     method: "POST",
     rejectUnauthorized: false,
     data: querystring.stringify({
       grant_type: 'password',   
-      client_id: '063d6d9d15f021100f36ebbb2bb566d9', // Process.env.client_id  to obtain from environment variables
-      client_secret: '82*.(@TV:+', // Process.env.client_secret  to obtain from environment variables
-      username: 'admin', // Process.env.username  to obtain from environment variables
-      password: 'Zwa2GWc$7^eC'  // Process.env.password  to obtain from environment variables
+      client_id: '<client_id>', // Process.env.client_id  to obtain from environment variables
+      client_secret: '<client_secret>', // Process.env.client_secret  to obtain from environment variables
+      username: '<username>', // Process.env.username  to obtain from environment variables
+      password: '<password>'  // Process.env.password  to obtain from environment variables
       }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -36,18 +36,20 @@ const  itsmLogin = async () => {
   return login.data
 }
 
-
+//construct a uniue identfier for this alert , which will be later used to identify if it should update an existing or create a new incident
 const constructUniqueString = (alert) => {
   return  alert.labels.alertname +"-"+ alert.labels.namespace+"-"+alert.fingerprint
 }
 
+// This is a search function to unique identify your record , which will decide to create a new or update an existing record
 const searchQuery = async (login,uniqueString) => {
   const itsmSearchConstruct ={
-    baseURL: "https://dev144072.service-now.com/api/now/table/incident",
+    baseURL: "https://<your service now>.service-now.com/api/now/table/incident",
     method: "GET",
     rejectUnauthorized: false,
     params: {
       sysparm_limit: 10,
+      // In my case, I am using a unique short_description however you can choose any field
       short_description: uniqueString
     },
     headers: {
@@ -64,7 +66,7 @@ const searchQuery = async (login,uniqueString) => {
 const createRecord = async (login,uniqueString,alert) => {
 
   const itsmCreateConstruct ={
-    baseURL: "https://dev144072.service-now.com/api/now/table/incident",
+    baseURL: "https://<your service now>.service-now.com/api/now/table/incident",
     method: "POST",
     rejectUnauthorized: false,
     data: {
@@ -86,7 +88,7 @@ const createRecord = async (login,uniqueString,alert) => {
 const updateRecord = async (login,sys_id,alert) => {
 
   const itsmUpdateConstruct ={
-    baseURL: "https://dev144072.service-now.com/api/now/table/incident/"+sys_id,
+    baseURL: "https://<your service now>.service-now.com/api/now/table/incident/"+sys_id,
     method: "PUT",
     rejectUnauthorized: false,
     data: {
@@ -108,7 +110,7 @@ const closeRecord = async (login,sys_id,alert) => {
 
 
   const itsmCloseConstruct ={
-    baseURL: "https://dev144072.service-now.com/api/now/table/incident/"+sys_id,
+    baseURL: "https://<your service now>.service-now.com/api/now/table/incident/"+sys_id,
     method: "PUT",
     rejectUnauthorized: false,
     data: {
