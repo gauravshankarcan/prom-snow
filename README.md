@@ -4,12 +4,12 @@
 
 The article describes a mechanism to proxy a simple webhook to various ITSM tools.
 
-In this article today, I am going to integrate openshift based prometheus to Service now. [ The process is similar to any API-enabled ITSM tool]
+In this article today, I am going to integrate OpenShift based prometheus to Service now. [ The process is similar to any API-enabled ITSM tool]
 
 ### Prerequisite
 
 - Assumes you have a fully configured prometheus instance, with alerting enabled on the target namespace where you are creating the alerts
-- Assumes you have a basic understanding of the openshift monitoring stack
+- Assumes you have a basic understanding of the OpenShift monitoring stack
 - Assumes you have a working instance of ServiceNow or any other ITSM tool which can be managed via API
 - Assumes you have an understanding of nodejs
 
@@ -22,13 +22,13 @@ The git repo with the sample template to be configured is [provided here for ref
 
 I will use a developer instance of SNOW/service now for showing the construction, but the logic is essentially the same for any ITSM tool
 
-The git repo contains an app folder that has a simple 1-page nodejs code which will be used to construct a docker image, to be customized for your needs.
+The git repo contains an app folder that has a simple 1-page nodejs code which will be used to construct a container image, to be customized for your needs.
 
 ### Let's prepare the server.js file
 
 Open up the file app/server.js  this file contains an express-based app that receives data as a webhook from prometheus.  
 
-> Note: At a later point of this article I will show, how to configure prometheus webhooks on openshift 
+> Note: At a later point of this article I will show, how to configure prometheus webhooks on OpenShift 
 
 The request I receive from Prometheus is a post request, hence I will use the simple function, which captures the body of the post and sends it to be parsed by the requestParse function
 
@@ -211,10 +211,10 @@ Add more fields as you see fit to all three functions, labels are avaiable via a
 
 ### Build the proxy and generating the test alert
 
-Let's build a proxy app using the docker image
-Sample Dockerfile is the app folder. you can build the image and deploy after configuring it based on the above steps. Ensure all the credentials are passed as environment variables as secrets.
+Build the proxy app using the container image
+Sample Containerfile is the app folder. you can build the image and deploy after configuring it based on the above steps. Ensure all the credentials are passed as environment variables as secrets.
 
-Let create an alert with label matchers  ``alert=servicenow``
+Create an alert with label matchers  ``alert=servicenow``
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
@@ -238,7 +238,9 @@ spec:
         ### any label you add here can be used inside javascript . accessible via alert.labels.closenotes in the create/update/resolve functions.
 ```
 
-create a receiver of type webhook
+For more details on how to create alerts and configure webhooks, consult [Managing alerts documentation.](https://docs.openshift.com/container-platform/4.12/monitoring/managing-alerts.html)
+
+Create a receiver of type webhook
 
 > your url may be different based on your service.
 Depending on how you have set up the service you may want to add
