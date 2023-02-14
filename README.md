@@ -264,3 +264,6 @@ Similarly, once the alert has been resolved, the servicenow record would also re
 That was lot of info, but once you have built it, It will have long-term benefits by being able to integrate alerting in your existing ITSM process flow.
 
 Any labels set on the prometheus alerts are passed onto the webhook body, similar to `alert=servicenow`, you can set additional labels like description / short_description / owner /close notes to be added when resolved etc, and pass it to the webhook and set it using the create/update/resolve functions on to the ITSM record. 
+
+#### Recovery from failed state if any 
+I rely on the OpenShift liveness probe which works well for this example and it's less complex. In your production code you may want to add more error handling
