@@ -214,6 +214,10 @@ Add more fields as you see fit to all three functions, labels are avaiable via a
 Build the proxy app using the container image
 Sample Containerfile is the app folder. you can build the image and deploy after configuring it based on the above steps. Ensure all the credentials are passed as environment variables as secrets.
 
+For deploying in openshift you can refer to the openshift documentation [here](https://docs.openshift.com/container-platform/4.12/applications/creating_applications/odc-creating-applications-using-developer-perspective.html#odc-importing-codebase-from-git-to-create-application_odc-creating-applications-using-developer-perspective)
+
+
+
 Create an alert with label matchers  ``alert=servicenow``
 
 ```yaml
