@@ -18,7 +18,7 @@ const app = express();
 
 const  itsmLogin = async () => {
   const itsmLoginRequestConstruct ={
-    baseURL: "https://dev175289.service-now.com.service-now.com/oauth_token.do",
+    baseURL: "https://dev175289.service-now.com/oauth_token.do",
     method: "POST",
     rejectUnauthorized: false,
     data: querystring.stringify({
@@ -44,7 +44,7 @@ const constructUniqueString = (alert) => {
 // This is a search function to unique identify your record , which will decide to create a new or update an existing record
 const searchQuery = async (login,uniqueString) => {
   const itsmSearchConstruct ={
-    baseURL: "https://dev175289.service-now.com.service-now.com/api/now/table/incident",
+    baseURL: "https://dev175289.service-now.com/api/now/table/incident",
     method: "GET",
     rejectUnauthorized: false,
     params: {
@@ -66,7 +66,7 @@ const searchQuery = async (login,uniqueString) => {
 const createRecord = async (login,uniqueString,alert) => {
 
   const itsmCreateConstruct ={
-    baseURL: "https://dev175289.service-now.com.service-now.com/api/now/table/incident",
+    baseURL: "https://dev175289.service-now.com/api/now/table/incident",
     method: "POST",
     rejectUnauthorized: false,
     data: {
@@ -88,7 +88,7 @@ const createRecord = async (login,uniqueString,alert) => {
 const updateRecord = async (login,sys_id,alert) => {
 
   const itsmUpdateConstruct ={
-    baseURL: "https://dev175289.service-now.com.service-now.com/api/now/table/incident/"+sys_id,
+    baseURL: "https://dev175289.service-now.com/api/now/table/incident/"+sys_id,
     method: "PUT",
     rejectUnauthorized: false,
     data: {
@@ -110,7 +110,7 @@ const closeRecord = async (login,sys_id,alert) => {
 
 
   const itsmCloseConstruct ={
-    baseURL: "https://dev175289.service-now.com.service-now.com/api/now/table/incident/"+sys_id,
+    baseURL: "https://dev175289.service-now.com/api/now/table/incident/"+sys_id,
     method: "PUT",
     rejectUnauthorized: false,
     data: {
